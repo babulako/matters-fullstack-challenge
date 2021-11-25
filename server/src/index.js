@@ -1,37 +1,36 @@
-/**
- * This is an incomplete script of apollo server. Please
- * make it live with features we requested. :)
- *
- */
+const { ApolloServer, gql } = require('apollo-server');
+const initDB = require('./db');
 
-require('dotenv').config()
+const initServer = () => (
+  new ApolloServer({
+    cors: {
+      origin: [],
+    },
+    dataSources: () => ({ }),
+    debug: true,
+    resolvers: {
+      Query: {},
+    },
+    typeDefs: gql`
+      type Article {
+        title: String
+        content: String
+      }
+  
+      type Query {
+        articles: [Article]
+      }
+    `,
+  })
+);
 
-import { ApolloServer, gql } from 'apollo-server'
+const start = () => {
+  initDB()
+    .then(initServer)
+    .then((server) => server.listen({ port: 4000 }))
+    .then(({ url }) => {
+      console.info(`Server is ready at ${url}`); // eslint-disable-line
+    });
+};
 
-// init server
-const server = new ApolloServer({
-  cors: {
-    origin: [],
-  },
-  dataSources: () => ({ }),
-  debug: true,
-  resolvers: {
-    Query: {},
-    Mutation: {},
-  },
-  typeDefs: gql`
-    type Article {
-      title: string
-      content: string
-    }
-
-    type Query {
-      articles: [Article]
-    }
-  `,
-})
-
-// run server up
-server
-  .listen({ port: '' })
-  .then(({ url }) => console.log(`Server is ready at ${url}`))
+start();
