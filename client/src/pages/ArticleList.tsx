@@ -1,6 +1,6 @@
 import React from 'react';
 import { RouteComponentProps } from '@reach/router';
-import { gql, useQuery } from '@apollo/client';
+import { gql, useQuery, useApolloClient } from '@apollo/client';
 import { useNavigate } from "@reach/router";
 import { List, Button, Spin, Typography, Space } from 'antd';
 import { PlusOutlined, RightOutlined } from '@ant-design/icons';
@@ -32,9 +32,14 @@ const ArticleList: React.FC<RouteComponentProps> = () => {
   });
 
   const navigate = useNavigate();
+  const client = useApolloClient();
   const [loadingMore, setLoadingMore] = React.useState(false);
   const postArticle = React.useCallback(() => navigate(`/post`, { replace: true }), []);
   const showDetail = React.useCallback((id) => navigate(`/${id}`, { replace: true }), []);
+  const refresh = React.useCallback(() => {
+    client.resetStore();
+  }, [client]);
+
   const more = () => {
     setLoadingMore(true);
     fetchMore({ 
@@ -64,6 +69,7 @@ const ArticleList: React.FC<RouteComponentProps> = () => {
       {loadingMore && <Spin />}
       <Space>
         <Button hidden={!data.articles.hasMore} onClick={more}>Fetch More</Button>
+        <Button onClick={refresh}>Refresh</Button>
         <Typography.Text type="secondary">For demonstrating article pagination, please have more then three articles</Typography.Text>
       </Space>
     </>
