@@ -8,6 +8,7 @@ import { Router } from '@reach/router';
 
 import cache from './cache';
 import ArticleList from './pages/ArticleList';
+import Article from './pages/Article';
 import Post from './pages/Post';
 
 const client = new ApolloClient<NormalizedCacheObject>({
@@ -21,6 +22,7 @@ const App:React.FC = () => (
       <Router> 
         <ArticleList path="/" />
         <Post path="/post" />
+        <Article path="/:id" />
       </Router>
     </ApolloProvider>
   </div>

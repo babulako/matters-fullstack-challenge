@@ -3,7 +3,7 @@ import { RouteComponentProps } from '@reach/router';
 import { gql, useQuery } from '@apollo/client';
 import { useNavigate } from "@reach/router";
 import { List, Button, Spin, Typography, Space } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, RightOutlined } from '@ant-design/icons';
 
 
 const FETCH_ARTICLES = gql`
@@ -34,6 +34,7 @@ const ArticleList: React.FC<RouteComponentProps> = () => {
   const navigate = useNavigate();
   const [loadingMore, setLoadingMore] = React.useState(false);
   const postArticle = React.useCallback(() => navigate(`/post`, { replace: true }), []);
+  const showDetail = React.useCallback((id) => navigate(`/${id}`, { replace: true }), []);
   const more = () => {
     setLoadingMore(true);
     fetchMore({ 
@@ -52,6 +53,10 @@ const ArticleList: React.FC<RouteComponentProps> = () => {
           {(data.articles.articles.map((article: ArticleType) => (
             <List.Item key={article.id}>
               <List.Item.Meta title={article.title} />
+              <Button type="link" onClick={() => showDetail(article.id)}>
+                DETAIL
+                <RightOutlined />
+              </Button>
             </List.Item>
           )))}
         </List>
