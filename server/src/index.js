@@ -7,7 +7,7 @@ const sources = require('./sources');
 const initServer = (db) => (
   new ApolloServer({
     cors: {
-      origin: ['https://studio.apollographql.com', 'http://localhost:8000'],
+      origin: ['http://localhost:8000'],
     },
     dataSources: () => ({ article: new sources.ArticleSource(db) }),
     typeDefs: schema,
