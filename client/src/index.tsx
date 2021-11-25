@@ -1,18 +1,6 @@
-/**
- * This is an incomplete script of client app. Please
- * make it live with features we requested. :)
- *
- */
+import React from 'react';
+import { render } from 'react-dom';
+import App from './App';
+import 'antd/dist/antd.css';
 
-import React from 'react'
-import { render } from 'react-dom'
-
-const App = (): React.ReactElement => {
-  return (
-    <section>
-      Hello, world! :)
-    </section>
-  )
-}
-
-render(<App />, document.getElementById('app'))
+render(<App />, document.getElementById('app'));
