@@ -31,6 +31,13 @@ const resolvers = {
 
       return { cursor: '', hasMore: false, articles };
     },
+    article: (_, { id }, { dataSources }) => {
+      const article = dataSources.article.getArticle(id);
+      if (!article || !article.length) {
+        throw new Error('article not found');
+      }
+      return article[0];
+    },
   },
 };
 

@@ -12,6 +12,10 @@ class ArticleSource extends DataSource {
     return this.db.articles.put(doc, { pin: true });
   }
 
+  getArticle(id) {
+    return this.db.articles.get(id);
+  }
+
   listArticles() {
     return this.db.articles.get('');
   }

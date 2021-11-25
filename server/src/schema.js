@@ -24,6 +24,7 @@ type ArticlePage {
 
 type Query {
   articles(pageSize: Int, after: String): ArticlePage
+  article(id: String): Article
 }
 `;
 
