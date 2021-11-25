@@ -1,7 +1,10 @@
 import React from 'react';
 import { RouteComponentProps } from '@reach/router';
 import { gql, useQuery } from '@apollo/client';
+import { useNavigate } from "@reach/router";
 import { List, Button, Spin, Typography, Space } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+
 
 const FETCH_ARTICLES = gql`
   query FetchArticles($pageSize: Int, $after: String) {
@@ -28,7 +31,9 @@ const ArticleList: React.FC<RouteComponentProps> = () => {
     variables: { pageSize: 3 },
   });
 
+  const navigate = useNavigate();
   const [loadingMore, setLoadingMore] = React.useState(false);
+  const postArticle = React.useCallback(() => navigate(`/post`, { replace: true }), []);
   const more = () => {
     setLoadingMore(true);
     fetchMore({ 
@@ -41,6 +46,7 @@ const ArticleList: React.FC<RouteComponentProps> = () => {
 
   return (
     <>
+      <Button onClick={postArticle} icon={<PlusOutlined />} />
       <div style={{ marginTop: 50, marginBottom: 50 }}>
         <List size="large">
           {(data.articles.articles.map((article: ArticleType) => (
