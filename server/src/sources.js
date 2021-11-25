@@ -11,6 +11,10 @@ class ArticleSource extends DataSource {
     const doc = { ...article, id: kuuid.id() };
     return this.db.articles.put(doc, { pin: true });
   }
+
+  listArticles() {
+    return this.db.articles.get('');
+  }
 }
 
 module.exports = ({ ArticleSource });

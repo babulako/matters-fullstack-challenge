@@ -16,8 +16,14 @@ type Mutation {
   postArticle(post: Post): Article
 }
 
+type ArticlePage {
+  cursor: String!
+  hasMore: Boolean!
+  articles: [Article]!
+}
+
 type Query {
-  articles: [Article]
+  articles(pageSize: Int, after: String): ArticlePage
 }
 `;
 
