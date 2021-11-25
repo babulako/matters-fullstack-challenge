@@ -4,7 +4,7 @@ const orbit = require('orbit-db');
 const initDB = () => (
   ipfs.create({ repo: './ipfs' })
     .then(orbit.createInstance)
-    .then((ob) => ob.docs('articles'))
+    .then((ob) => ob.docs('articles', { indexBy: 'id' }))
     .then((articles) => {
       articles.load();
       return { articles };

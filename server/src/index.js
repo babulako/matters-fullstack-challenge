@@ -1,26 +1,18 @@
-const { ApolloServer, gql } = require('apollo-server');
+const { ApolloServer } = require('apollo-server');
 const initDB = require('./db');
+const resolvers = require('./resolvers');
+const schema = require('./schema');
+const sources = require('./sources');
 
-const initServer = () => (
+const initServer = (db) => (
   new ApolloServer({
     cors: {
-      origin: [],
+      origin: ['https://studio.apollographql.com', 'http://localhost:8000'],
     },
-    dataSources: () => ({ }),
+    dataSources: () => ({ article: new sources.ArticleSource(db) }),
+    typeDefs: schema,
     debug: true,
-    resolvers: {
-      Query: {},
-    },
-    typeDefs: gql`
-      type Article {
-        title: String
-        content: String
-      }
-  
-      type Query {
-        articles: [Article]
-      }
-    `,
+    resolvers,
   })
 );
 
